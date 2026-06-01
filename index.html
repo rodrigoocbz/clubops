@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClubOps | Gestion deportiva</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navegacion principal">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">CO</span>
+          <div>
+            <strong>ClubOps</strong>
+            <span>Football operations</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Secciones">
+          <a class="nav-link active" href="#panel">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 13h6v7H4zM14 4h6v16h-6zM4 4h6v5H4z" /></svg>
+            Panel
+          </a>
+          <a class="nav-link" href="#plantilla">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 11a4 4 0 1 0-3.3-6.3A5 5 0 1 0 7 13c-2.7 0-5 1.8-5 4v2h11v-2c0-1-.4-1.9-1.1-2.6A6.5 6.5 0 0 1 16 13c3.3 0 6 2.2 6 5v2h-7v-2c0-2-1-3.8-2.6-5A4 4 0 0 0 16 11z" /></svg>
+            Plantilla
+          </a>
+          <a class="nav-link" href="#sesion">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h14v4H5zM5 10h14v11H5zm3 3v5h2v-5zm4 0v5h2v-5z" /></svg>
+            Sesion
+          </a>
+          <a class="nav-link" href="#finanzas">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19h16v2H4zM6 10h3v7H6zm5-5h3v12h-3zm5 8h3v4h-3z" /></svg>
+            Finanzas
+          </a>
+        </nav>
+
+        <div class="side-card">
+          <span class="side-label">Proximo partido</span>
+          <strong>Union B</strong>
+          <small>Sabado 18:30 - Campo Vicente del Bosque</small>
+          <div class="mini-score">
+            <span>Preparacion</span>
+            <b id="sideReadiness">0%</b>
+          </div>
+        </div>
+
+        <div class="side-card subtle">
+          <span class="side-label">Estado del proyecto</span>
+          <ul class="check-list">
+            <li>Datos editables</li>
+            <li>Informe automatico</li>
+            <li>Persistencia local</li>
+          </ul>
+        </div>
+
+        <button class="ghost-button" id="resetData" type="button">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 7h10l-2.5-2.5L16 3l5 5-5 5-1.5-1.5L17 9H7a3 3 0 0 0 0 6h3v2H7A5 5 0 0 1 7 7zm10 10H7l2.5 2.5L8 21l-5-5 5-5 1.5 1.5L7 15h10a3 3 0 0 0 0-6h-3V7h3a5 5 0 0 1 0 10z" /></svg>
+          Reset demo
+        </button>
+      </aside>
+
+      <main class="dashboard">
+        <header class="workspace-header" id="panel">
+          <div class="title-block">
+            <p class="eyebrow">Temporada 2026 - Regional amateur</p>
+            <h1>Helmantic FC</h1>
+            <p>Panel operativo para cuerpo tecnico: disponibilidad, carga, sesion, partido y caja del club.</p>
+          </div>
+
+          <div class="header-actions" aria-label="Acciones principales">
+            <div class="segmented" role="group" aria-label="Periodo">
+              <button class="segment active" data-period="week" type="button">Semana</button>
+              <button class="segment" data-period="month" type="button">Mes</button>
+              <button class="segment" data-period="season" type="button">Temporada</button>
+            </div>
+            <button class="text-button primary" id="exportButton" type="button">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 20h14v-2H5zm7-17v10.2l3.6-3.6L17 11l-6 6-6-6 1.4-1.4 3.6 3.6V3z" /></svg>
+              Informe
+            </button>
+          </div>
+        </header>
+
+        <section class="command-grid" aria-label="Resumen de semana">
+          <article class="match-card">
+            <div>
+              <p class="eyebrow">Matchday</p>
+              <h2>Plan vs Union B</h2>
+              <p>Ritmo medio, defensa adelantada y control de cargas en la banda izquierda.</p>
+            </div>
+            <div class="match-meta">
+              <span>Sabado</span>
+              <strong>18:30</strong>
+              <small>Local</small>
+            </div>
+          </article>
+
+          <article class="readiness-card">
+            <div class="score-ring" id="scoreRing" style="--score: 0">
+              <span id="targetScore">0%</span>
+            </div>
+            <div>
+              <p class="eyebrow">Preparacion</p>
+              <h2 id="readinessTitle">Calculando</h2>
+              <p id="readinessCopy">La lectura se actualiza al cambiar disponibilidad, carga o asistencia.</p>
+            </div>
+          </article>
+
+          <article class="formation-card">
+            <p class="eyebrow">Sistema</p>
+            <div class="formation-tabs" role="group" aria-label="Elegir formacion">
+              <button class="formation active" data-formation="433" type="button">4-3-3</button>
+              <button class="formation" data-formation="442" type="button">4-4-2</button>
+              <button class="formation" data-formation="352" type="button">3-5-2</button>
+            </div>
+            <small id="formationCopy">Once equilibrado para presionar arriba.</small>
+          </article>
+        </section>
+
+        <section class="metrics-grid" aria-label="Metricas principales">
+          <article class="metric-card">
+            <span>Asistencia media</span>
+            <strong id="avgAttendance">0%</strong>
+            <small id="attendanceCopy">Cargando plantilla</small>
+            <div class="spark-bars" id="attendanceSpark" aria-hidden="true"></div>
+          </article>
+          <article class="metric-card">
+            <span>Riesgo fisico</span>
+            <strong id="riskCount">0</strong>
+            <small>jugadores con carga alta</small>
+            <div class="spark-bars danger" id="riskSpark" aria-hidden="true"></div>
+          </article>
+          <article class="metric-card">
+            <span>Balance mensual</span>
+            <strong id="monthlyBalance">0 EUR</strong>
+            <small>cuotas, gastos y patrocinios</small>
+            <div class="spark-bars money" id="financeSpark" aria-hidden="true"></div>
+          </article>
+          <article class="metric-card">
+            <span>Disponibles</span>
+            <strong id="availableCount">0/0</strong>
+            <small id="availableCopy">pendiente</small>
+            <div class="spark-bars" id="availableSpark" aria-hidden="true"></div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <section class="panel lineup-panel" aria-labelledby="lineup-title">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Alineacion</p>
+                <h2 id="lineup-title">Once probable</h2>
+              </div>
+              <button class="text-button" id="optimizeLineup" type="button">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2l1.8 5.5H20l-5 3.7 1.9 5.8L12 13.4 7.1 17 9 11.2 4 7.5h6.2z" /></svg>
+                Optimizar
+              </button>
+            </div>
+
+            <div class="pitch" aria-label="Campo de futbol con jugadores">
+              <div class="pitch-line half"></div>
+              <div class="pitch-box top"></div>
+              <div class="pitch-box bottom"></div>
+              <div class="pitch-circle"></div>
+              <div id="lineupMarkers"></div>
+            </div>
+
+            <div class="selected-player" id="selectedPlayer">
+              Selecciona un jugador del campo para abrir su ficha rapida.
+            </div>
+          </section>
+
+          <aside class="panel insight-panel" aria-labelledby="insight-title">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Decision</p>
+                <h2 id="insight-title">Alertas utiles</h2>
+              </div>
+            </div>
+            <div class="insight-list" id="insightList"></div>
+
+            <div class="mini-kpi">
+              <span>Minutos competitivos</span>
+              <strong id="minutesTotal">0</strong>
+            </div>
+            <div class="mini-kpi">
+              <span>Goles del once</span>
+              <strong id="lineupGoals">0</strong>
+            </div>
+          </aside>
+        </section>
+
+        <section class="wide-grid">
+          <section class="panel" id="plantilla" aria-labelledby="squad-title">
+            <div class="panel-header table-header">
+              <div>
+                <p class="eyebrow">Plantilla</p>
+                <h2 id="squad-title">Estado de jugadores</h2>
+              </div>
+              <div class="filters">
+                <label class="search-field">
+                  <span class="sr-only">Buscar jugador</span>
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm0-2a8 8 0 0 1 6.3 12.9l4.4 4.4-1.4 1.4-4.4-4.4A8 8 0 1 1 10 2z" /></svg>
+                  <input id="searchInput" type="search" placeholder="Buscar jugador" />
+                </label>
+                <select id="positionFilter" aria-label="Filtrar por posicion">
+                  <option value="all">Todas</option>
+                  <option value="POR">POR</option>
+                  <option value="DEF">DEF</option>
+                  <option value="MED">MED</option>
+                  <option value="DEL">DEL</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Jugador</th>
+                    <th>Pos</th>
+                    <th>Asist.</th>
+                    <th>Carga</th>
+                    <th>Forma</th>
+                    <th>Estado</th>
+                    <th>Disp.</th>
+                  </tr>
+                </thead>
+                <tbody id="playersTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel" id="sesion" aria-labelledby="session-title">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Entrenamiento</p>
+                <h2 id="session-title">Microciclo</h2>
+              </div>
+              <button class="icon-button compact" id="addDrill" type="button" aria-label="Anadir bloque">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" /></svg>
+              </button>
+            </div>
+
+            <label class="range-field" for="intensityRange">
+              Intensidad prevista
+              <span id="intensityLabel">70%</span>
+              <input id="intensityRange" type="range" min="30" max="100" value="70" />
+            </label>
+
+            <div class="day-strip" id="dayStrip" aria-label="Carga semanal"></div>
+            <div class="drill-list" id="drillList" aria-label="Bloques de entrenamiento"></div>
+          </section>
+        </section>
+
+        <section class="bottom-grid">
+          <section class="panel finance-panel" id="finanzas" aria-labelledby="finance-title">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Gestion</p>
+                <h2 id="finance-title">Caja del mes</h2>
+              </div>
+              <strong class="balance-pill" id="balancePill">0 EUR</strong>
+            </div>
+
+            <div class="finance-chart" id="financeChart" aria-label="Grafico de finanzas"></div>
+            <div class="finance-lines" id="financeLines"></div>
+
+            <form class="mini-form" id="financeForm">
+              <label>
+                Concepto
+                <input id="financeConcept" type="text" placeholder="Ej. patrocinio" required />
+              </label>
+              <label>
+                Importe
+                <input id="financeAmount" type="number" step="1" placeholder="120" required />
+              </label>
+              <select id="financeType" aria-label="Tipo de movimiento">
+                <option value="income">Ingreso</option>
+                <option value="expense">Gasto</option>
+              </select>
+              <button class="text-button full" type="submit">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" /></svg>
+                Anadir movimiento
+              </button>
+            </form>
+          </section>
+
+          <section class="panel report-panel" aria-live="polite" aria-labelledby="report-title">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Informe</p>
+                <h2 id="report-title">Resumen para cuerpo tecnico</h2>
+              </div>
+            </div>
+            <p id="reportText">Pulsa Informe para generar una lectura automatica de disponibilidad, carga, once y caja.</p>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="player-dialog" id="playerDialog">
+      <form method="dialog" class="player-sheet">
+        <button class="icon-button close-dialog" value="close" type="submit" aria-label="Cerrar ficha">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6L19 6.4 17.6 5 12 10.6z" /></svg>
+        </button>
+        <div class="sheet-head">
+          <span class="avatar large" id="sheetAvatar">DM</span>
+          <div>
+            <p class="eyebrow" id="sheetPosition">POR</p>
+            <h2 id="sheetName">Jugador</h2>
+            <small id="sheetStatus">Estado</small>
+          </div>
+        </div>
+
+        <label class="range-field" for="sheetAttendance">
+          Asistencia
+          <span id="sheetAttendanceValue">0%</span>
+          <input id="sheetAttendance" type="range" min="0" max="100" />
+        </label>
+        <label class="range-field" for="sheetLoad">
+          Carga fisica
+          <span id="sheetLoadValue">0%</span>
+          <input id="sheetLoad" type="range" min="0" max="100" />
+        </label>
+        <label class="range-field" for="sheetForm">
+          Forma
+          <span id="sheetFormValue">0%</span>
+          <input id="sheetForm" type="range" min="0" max="100" />
+        </label>
+
+        <label class="inline-check">
+          <input id="sheetAvailable" type="checkbox" />
+          Disponible para el partido
+        </label>
+
+        <button class="text-button primary full" id="savePlayer" value="save" type="submit">Guardar cambios</button>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
